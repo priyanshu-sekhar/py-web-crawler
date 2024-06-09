@@ -401,6 +401,16 @@ files = [
 ]
 
 [[package]]
+name = "robotexclusionrulesparser"
+version = "1.7.1"
+description = "A robots.txt parser alternative to Python's robotparser module"
+optional = false
+python-versions = "*"
+files = [
+    {file = "robotexclusionrulesparser-1.7.1.tar.gz", hash = "sha256:d23aa14ae8145c13c95612d696736bad52a4bd0819ce8c9437ee745098fb8388"},
+]
+
+[[package]]
 name = "soupsieve"
 version = "2.5"
 description = "A modern CSS selector implementation for Beautiful Soup."
@@ -528,4 +538,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "cac4716361ee90d8a40e449448bb8524023d72b97663ed905c5661be2c53d7e7"
+content-hash = "e35c1f881254ffa61e3b7d6ef744200c1cb1dc16d3cf263d267c8b6f38710121"
