@@ -24,7 +24,7 @@ class CrawlerTests(asynctest.TestCase):
             mock_session_service_aexit.assert_called_once()
 
     @patch('src.crawler.FileIO')
-    @patch('src.crawler.LookupService', new_callable=AsyncMock)
+    @patch('src.crawler.LookupService')
     async def test_crawler_process_url_skips_seen_url(self, mock_lookup_service, mock_file_io):
         crawler = Crawler('https://test.com', 'test.txt')
         mock_lookup_service.check_if_seen_and_update.return_value = True

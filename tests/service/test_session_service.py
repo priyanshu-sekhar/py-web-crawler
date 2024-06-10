@@ -7,9 +7,10 @@ from src.service.session_service import SessionService
 
 
 class SessionServiceTests(asynctest.TestCase):
-    @patch('aiohttp.ClientSession', new_callable=AsyncMock)
+    @patch('aiohttp.ClientSession')
     async def test_session_service_setup_creates_session(self, mock_session):
         service = SessionService()
+        service.session = mock_session
         await service.__aenter__()
         mock_session.assert_called_once()
 

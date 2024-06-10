@@ -32,26 +32,23 @@ class Crawler:
 
     async def _process_url(self, url):
         try:
-            if await self.lookup_service.check_if_seen_and_update(url):
+            if await self._is_url_seen(url) or not self._can_crawl_url(url):
                 return
-            if not self.robots_service.can_crawl(url):
-                return
-            await self.file_service.write_to_file(url)
-            response = await self.session_service.get(url)
-            link_urls = await self.link_parser.get_subdomain_links(url, response)
-            await self._crawl(link_urls)
+            await self._process_unseen_url(url)
         except Exception as e:
             print(f"Error crawling {url}: {e}")
 
-    async def _setup(self):
-        await self.lookup_service.setup()
-        await self.robots_service.setup()
-        await self.session_service.setup()
+    async def _is_url_seen(self, url):
+        return await self.lookup_service.check_if_seen_and_update(url)
 
-    async def _teardown(self):
-        await self.lookup_service.terminate()
-        await self.robots_service.terminate()
-        await self.session_service.terminate()
+    def _can_crawl_url(self, url):
+        return self.robots_service.can_crawl(url)
+
+    async def _process_unseen_url(self, url):
+        await self.file_service.write_to_file(url)
+        response = await self.session_service.get(url)
+        link_urls = await self.link_parser.get_subdomain_links(url, response)
+        await self._crawl(link_urls)
 
 
 if __name__ == '__main__':

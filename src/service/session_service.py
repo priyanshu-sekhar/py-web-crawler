@@ -1,9 +1,7 @@
 import aiohttp
 
-from src.service.base_service import BaseService
 
-
-class SessionService(BaseService):
+class SessionService:
     def __init__(self):
         self.session = None
 

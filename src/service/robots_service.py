@@ -2,10 +2,8 @@ from urllib.parse import urljoin
 
 import robotexclusionrulesparser
 
-from src.service.base_service import BaseService
 
-
-class RobotsService(BaseService):
+class RobotsService:
     def __init__(self):
         self.robots_parser = robotexclusionrulesparser.RobotFileParserLookalike()
 
