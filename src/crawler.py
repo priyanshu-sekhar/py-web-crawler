@@ -27,18 +27,24 @@ class Crawler:
             await self.__teardown()
 
     async def _crawl(self, urls):
+        tasks = []
         for url in urls:
-            try:
-                if await self.lookup_service.check_if_seen_and_update(url):
-                    continue
-                if not self.robots_service.can_crawl(url):
-                    continue
-                await self.file_service.write_to_file(url)
-                self.rate_limit_service.wait()
-                link_urls = await self.link_service.get_subdomain_links(url)
-                await self._crawl(link_urls)
-            except Exception as e:
-                print(f"Error crawling {url}: {e}")
+            task = asyncio.create_task(self.__process_url(url))
+            tasks.append(task)
+        await asyncio.gather(*tasks)
+
+    async def __process_url(self, url):
+        try:
+            if await self.lookup_service.check_if_seen_and_update(url):
+                return
+            if not self.robots_service.can_crawl(url):
+                return
+            await self.file_service.write_to_file(url)
+            self.rate_limit_service.wait()
+            link_urls = await self.link_service.get_subdomain_links(url)
+            await self._crawl(link_urls)
+        except Exception as e:
+            print(f"Error crawling {url}: {e}")
 
     async def __setup(self):
         await self.lookup_service.setup()
