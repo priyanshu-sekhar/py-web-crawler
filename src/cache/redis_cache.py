@@ -5,7 +5,7 @@ from src.cache.cache import Cache
 
 class RedisCache(Cache):
     def __init__(self):
-        self.redis = 'hello'
+        self.redis = None
 
     async def setup(self):
         try:

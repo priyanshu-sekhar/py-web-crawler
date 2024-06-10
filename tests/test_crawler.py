@@ -33,7 +33,7 @@ class CrawlerTests(asynctest.TestCase):
     async def test_crawler_process_url_skips_seen_url(self, mock_lookup_service, mock_file_io):
         crawler = Crawler('http://test.com', 'test.txt')
         mock_lookup_service.check_if_seen_and_update.return_value = True
-        await crawler._Crawler__process_url('http://test.com')
+        await crawler._process_url('http://test.com')
         mock_file_io.write_to_file.assert_not_called()
 
     @patch('src.crawler.FileIO')
@@ -44,7 +44,7 @@ class CrawlerTests(asynctest.TestCase):
         crawler = Crawler('http://test.com', 'test.txt')
         mock_lookup_service.check_if_seen_and_update.return_value = False
         mock_robots_service.can_crawl.return_value = False
-        await crawler._Crawler__process_url('http://test.com')
+        await crawler._process_url('http://test.com')
         mock_file_io.write_to_file.assert_not_called()
 
 

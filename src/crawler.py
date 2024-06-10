@@ -21,19 +21,19 @@ class Crawler:
 
     async def crawl(self):
         try:
-            await self.__setup()
+            await self._setup()
             await self._crawl([self.start_url])
         finally:
-            await self.__teardown()
+            await self._teardown()
 
     async def _crawl(self, urls):
         tasks = []
         for url in urls:
-            task = asyncio.create_task(self.__process_url(url))
+            task = asyncio.create_task(self._process_url(url))
             tasks.append(task)
         await asyncio.gather(*tasks)
 
-    async def __process_url(self, url):
+    async def _process_url(self, url):
         try:
             if await self.lookup_service.check_if_seen_and_update(url):
                 return
@@ -46,12 +46,12 @@ class Crawler:
         except Exception as e:
             print(f"Error crawling {url}: {e}")
 
-    async def __setup(self):
+    async def _setup(self):
         await self.lookup_service.setup()
         await self.robots_service.setup()
         await self.session_service.setup()
 
-    async def __teardown(self):
+    async def _teardown(self):
         await self.lookup_service.terminate()
         await self.robots_service.terminate()
         await self.session_service.terminate()
