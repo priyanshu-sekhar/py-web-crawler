@@ -12,6 +12,7 @@ bs4 = "^0.0.2"
 aiofiles = "^23.2.1"
 aioredis = "^2.0.1"
 robotexclusionrulesparser = "^1.7.1"
+asynctest = "^0.13.0"
 
 
 [build-system]

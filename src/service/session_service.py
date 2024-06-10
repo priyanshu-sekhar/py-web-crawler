@@ -1,6 +1,6 @@
 import aiohttp
 
-from src.services.base_service import BaseService
+from src.service.base_service import BaseService
 
 
 class SessionService(BaseService):

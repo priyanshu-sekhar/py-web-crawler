@@ -2,7 +2,7 @@ from urllib.parse import urljoin
 
 import robotexclusionrulesparser
 
-from src.services.base_service import BaseService
+from src.service.base_service import BaseService
 
 
 class RobotsService(BaseService):

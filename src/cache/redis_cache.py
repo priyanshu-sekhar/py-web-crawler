@@ -1,15 +1,16 @@
 import aioredis
 
-from src.services.base_service import BaseService
+from src.cache.cache import Cache
 
 
-class RedisService(BaseService):
+class RedisCache(Cache):
     def __init__(self):
         self.redis = None
 
-    async def setup(self) -> bool:
+    async def setup(self):
         try:
             self.redis = await aioredis.from_url("redis://localhost")
+            # await self.restore_to_file("seen.txt")
             return True
         except Exception as e:
             print(f"Error connecting to Redis: {e}")
@@ -27,7 +28,7 @@ class RedisService(BaseService):
                 await self.redis.sadd("seen", url)
         return seen
 
-    async def dump_to_file(self, file_name):
+    async def restore_to_file(self, file_name):
         if self.redis:
             with open(file_name, "w") as f:
                 for url in await self.redis.smembers("seen"):
