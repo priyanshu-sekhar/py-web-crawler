@@ -20,14 +20,14 @@ class RedisCacheTests(asynctest.TestCase):
         result = await cache.setup()
         self.assertFalse(result)
 
-    @patch('src.cache.redis_cache.redis', new_callable=AsyncMock)
+    @patch('src.cache.redis_cache.RedisCache', new_callable=AsyncMock)
     async def test_redis_cache_terminate_closes_connection(self, mock_redis):
         cache = RedisCache()
         cache.redis = mock_redis
         await cache.terminate()
         mock_redis.close.assert_called_once()
 
-    @patch('src.cache.redis_cache.redis', new_callable=AsyncMock)
+    @patch('src.cache.redis_cache.RedisCache', new_callable=AsyncMock)
     async def test_redis_cache_check_if_seen_and_update_handles_seen_url(self, mock_redis):
         mock_redis.sismember.return_value = True
         cache = RedisCache()
@@ -35,7 +35,7 @@ class RedisCacheTests(asynctest.TestCase):
         result = await cache.check_if_seen_and_update('http://test.com')
         self.assertTrue(result)
 
-    @patch('src.cache.redis_cache.redis', new_callable=AsyncMock)
+    @patch('src.cache.redis_cache.RedisCache', new_callable=AsyncMock)
     async def test_redis_cache_check_if_seen_and_update_handles_unseen_url(self, mock_redis):
         mock_redis.sismember.return_value = False
         cache = RedisCache()

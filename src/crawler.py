@@ -60,6 +60,6 @@ class Crawler:
 if __name__ == '__main__':
     site_to_crawl = "https://monzo.com"
     links_file = "monzo-links.txt"
-    crawl_rate_limit = 1
+    crawl_rate_limit = 10
     crawler = Crawler(start_url=site_to_crawl, file_name=links_file, rate_limit=crawl_rate_limit)
     asyncio.run(crawler.crawl())
