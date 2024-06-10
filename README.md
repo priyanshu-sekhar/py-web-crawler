@@ -2,6 +2,21 @@
 Design a simple web crawler in python. Given a starting URL, the crawler should visit each URL it finds on the same domain. It should print each URL visited, and a list of links found on that page. The crawler should be limited to one subdomain - so when you start with *https://monzo.com/*, it would crawl all pages on the monzo.com website, but not follow external links, for example to facebook.com or community.monzo.com.
 Do not use frameworks like scrapy or go-colly which handle all the crawling behind the scenes or someone else's code. You are welcome to use libraries to handle things like HTML parsing.
 
+# Web Crawler
+
+This is a simple web crawler written in Python. Given a starting URL, the crawler visits each URL it finds on the same domain. It prints each URL visited, and a list of links found on that page. The crawler is limited to one subdomain.
+
+## Project Structure
+
+- `src/`: This directory contains the main source code for the web crawler.
+  - `crawler.py`: This is the main script that runs the web crawler.
+  - `service/`: This directory contains various services used by the crawler, such as `LookupService`, `RobotsService`, and `SessionService`.
+  - `util/`: This directory contains utility classes like `LinkParser` and `RateLimiter`.
+  - `io/`: This directory contains the `FileIO` class for file operations.
+  - `cache/`: This directory contains the `RedisCache` and `LocalCache` classes for caching URLs.
+  - `monzo-links.txt`: This file contains the output of the crawler.
+- `tests/`: This directory contains the test cases for the web crawler. The subdirectories follow the same structure as the `src/` directory.
+
 ## Setup
 
 ### Python Requirements
