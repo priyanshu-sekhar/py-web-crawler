@@ -7,7 +7,7 @@ class LookupService(BaseService):
     def __init__(self):
         self.cache = None
 
-    async def setup(self):
+    async def __aenter__(self):
         redis_cache = RedisCache()
         is_redis_cache_enabled = await redis_cache.setup()
         if is_redis_cache_enabled:
@@ -16,7 +16,7 @@ class LookupService(BaseService):
             self.cache = LocalCache()
             await self.cache.setup()
 
-    async def terminate(self):
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
         await self.cache.terminate()
 
     async def check_if_seen_and_update(self, url) -> bool:

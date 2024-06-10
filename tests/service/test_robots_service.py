@@ -20,7 +20,7 @@ class TestRobotsService(unittest.TestCase):
         mock_robots_parser.return_value.can_fetch.return_value = False
 
         service = RobotsService()
-        result = service.can_crawl('http://example.com')
+        result = service.can_crawl('https://example.com')
 
         self.assertFalse(result)
 
@@ -30,7 +30,7 @@ class TestRobotsService(unittest.TestCase):
         mock_robots_parser.return_value.can_fetch.side_effect = Exception('Error')
 
         service = RobotsService()
-        result = service.can_crawl('http://example.com')
+        result = service.can_crawl('https://example.com')
 
         self.assertFalse(result)
 

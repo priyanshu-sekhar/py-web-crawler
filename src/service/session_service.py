@@ -7,7 +7,7 @@ class SessionService(BaseService):
     def __init__(self):
         self.session = None
 
-    async def setup(self):
+    async def __aenter__(self):
         """
         Sets the session with a custom user agent
         """
@@ -17,7 +17,7 @@ class SessionService(BaseService):
         except Exception as e:
             print(f"Error creating aiohttp session: {e}")
 
-    async def terminate(self):
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
         if self.session:
             await self.session.close()
 

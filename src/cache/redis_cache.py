@@ -7,7 +7,7 @@ class RedisCache(Cache):
     def __init__(self):
         self.redis = None
 
-    async def setup(self):
+    async def __aenter__(self):
         try:
             self.redis = await aioredis.from_url("redis://localhost")
             # await self.restore_to_file("seen.txt")
@@ -16,7 +16,7 @@ class RedisCache(Cache):
             print(f"Error connecting to Redis: {e}")
             return False
 
-    async def terminate(self):
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
         if self.redis:
             await self.redis.close()
 

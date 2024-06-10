@@ -20,11 +20,8 @@ class Crawler:
         self.robots_service = RobotsService()
 
     async def crawl(self):
-        try:
-            await self._setup()
+        async with self.lookup_service, self.session_service:
             await self._crawl([self.start_url])
-        finally:
-            await self._teardown()
 
     async def _crawl(self, urls):
         tasks = []
@@ -60,6 +57,6 @@ class Crawler:
 if __name__ == '__main__':
     site_to_crawl = "https://monzo.com"
     links_file = "monzo-links.txt"
-    crawl_rate_limit = 10
+    crawl_rate_limit = 1
     crawler = Crawler(start_url=site_to_crawl, file_name=links_file, rate_limit=crawl_rate_limit)
     asyncio.run(crawler.crawl())
